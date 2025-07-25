@@ -21,7 +21,7 @@
   ],
   "measurements": [
     {
-      "sensorId": "SEN-001",
+      "id": "SEN-001",
       "measurements": [
         {
           "timestamp": "2025-05-25T07:02:14Z",
@@ -426,7 +426,7 @@
       ]
     },
     {
-      "sensorId": "SEN-002",
+      "id": "SEN-002",
       "measurements": [
         {
           "timestamp": "2025-05-25T07:04:06Z",
@@ -831,7 +831,7 @@
       ]
     },
     {
-      "sensorId": "SEN-003",
+      "id": "SEN-003",
       "measurements": [
         {
           "timestamp": "2025-05-25T06:53:47Z",
