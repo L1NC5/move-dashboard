@@ -23,7 +23,7 @@ npm install
 ### Compile, start mock API server and Hot-Reload for Development
 
 ```sh
-npm run start
+npm run dev
 ```
 
 ### Launch mock API server only

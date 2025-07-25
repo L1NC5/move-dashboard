@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "run-p api vite",
+    "dev": "run-p api vite",
     "api": "json-server ./src/api/db.json",
     "vite": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
