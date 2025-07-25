@@ -20,10 +20,22 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Compile, start mock API server and Hot-Reload for Development
 
 ```sh
 npm run dev
+```
+
+### Launch mock API server only
+
+```sh
+npm run api
+```
+
+### Launch Vite only
+
+```sh
+npm run vite
 ```
 
 ### Type-Check, Compile and Minify for Production

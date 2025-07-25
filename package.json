@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "run-p api vite",
+    "api": "json-server ./src/api/db.json",
+    "vite": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -13,6 +15,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "json-server": "^1.0.0-beta.3",
     "pinia": "^3.0.3",
     "vue": "^3.5.17"
   },
