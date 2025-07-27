@@ -22,11 +22,6 @@ export class MeasurementsService {
     return response.json()
   }
 
-  /** Retrieves all measurements from the API */
-  static async getAllMeasurements(): Promise<Array<MeasurementGroup>> {
-    return await this.fetchJson<Array<MeasurementGroup>>('/measurements')
-  }
-
   /** Retrieves a specific sensor's measurements from the API */
   static async getMeasurements(sensorId: string): Promise<MeasurementGroup> {
     return await this.fetchJson<MeasurementGroup>(`/measurements/${sensorId}`)

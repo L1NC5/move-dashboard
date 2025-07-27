@@ -1,51 +1,69 @@
 import { defineStore } from 'pinia'
-import { computed, ref, type Ref } from 'vue'
-import {
-  type Measurement,
-  type MeasurementGroup,
-  MeasurementsService,
-} from '@/services/MeasurementsService.ts'
+import { computed, type ComputedRef, ref, type Ref } from 'vue'
+import { type Measurement, MeasurementsService } from '@/services/MeasurementsService.ts'
+
+type MeasurementsMap = Record<string, Array<Measurement>>
+type LatestMeasurementMap = Record<string, Measurement>
+type LoadingMap = Record<string, boolean>
 
 export const useMeasurementsStore = defineStore('measurements', () => {
-  const measurementsData: Ref<Array<MeasurementGroup>> = ref([])
-  const loading: Ref<boolean> = ref(false)
+  const measurementsData: Ref<MeasurementsMap> = ref({})
+  const loadingBySensorId: Ref<LoadingMap> = ref({})
   const error: Ref<null | Error | string> = ref(null)
 
-  /** Retrieves measurements data */
-  const loadMeasurements = async () => {
+  /** Load measurements data for a single sensor */
+  const loadSensorMeasurements = async (sensorId: string) => {
+    if (loadingBySensorId.value[sensorId]) return
+
     try {
-      loading.value = true
+      loadingBySensorId.value[sensorId] = true
       error.value = null
 
-      measurementsData.value = await MeasurementsService.getAllMeasurements()
+      const measurementsGroup = await MeasurementsService.getMeasurements(sensorId)
+      measurementsData.value[sensorId] = measurementsGroup.measurements
     } catch (err) {
-      error.value = (err as Error).message || 'Error loading measurements'
+      error.value = err instanceof Error ? err.message : 'Error loading measurements'
     } finally {
-      loading.value = false
+      loadingBySensorId.value[sensorId] = false
     }
   }
 
-  /** Create a record containing all the latest measurements for each sensor */
-  const latestMeasurementBySensorId = computed(() => {
-    const latest: Record<string, Measurement> = {}
+  /** Load multiple sensors' measurements in parallel */
+  const loadMultipleSensorsMeasurements = async (sensorIds: Array<string>) => {
+    const promises = sensorIds.map((sensorId) => loadSensorMeasurements(sensorId))
+    await Promise.all(promises)
+  }
 
-    for (const group of measurementsData.value) {
-      const sensorId = group.id
-      for (const m of group.measurements) {
-        const current = latest[sensorId]
-        if (!current || new Date(m.timestamp) > new Date(current.timestamp)) {
-          latest[sensorId] = m
+  /** Get the latest measurement per sensor */
+  const latestMeasurementBySensor: ComputedRef<LatestMeasurementMap> = computed(() => {
+    const latest: LatestMeasurementMap = {}
+
+    for (const [sensorId, measurements] of Object.entries(measurementsData.value)) {
+      let latestMeasurement: Measurement | null = null
+
+      for (const measurement of measurements) {
+        if (
+          !latestMeasurement ||
+          new Date(measurement.timestamp) > new Date(latestMeasurement.timestamp)
+        ) {
+          latestMeasurement = measurement
         }
       }
+
+      if (latestMeasurement) {
+        latest[sensorId] = latestMeasurement
+      }
     }
+
     return latest
   })
 
   return {
     measurementsData,
-    loadMeasurements,
-    latestMeasurementBySensorId,
-    loading,
+    loadingBySensorId,
     error,
+    loadSensorMeasurements,
+    loadMultipleSensorsMeasurements,
+    latestMeasurementBySensor,
   }
 })
