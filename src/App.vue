@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import SensorTable from '@/components/SensorTable.vue'
+import MainDashboard from '@/components/MainDashboard.vue'
 </script>
 
 <template>
-  <main>
-    <SensorTable />
+  <main class="flex flex-col">
+    <MainDashboard />
   </main>
 </template>
 
