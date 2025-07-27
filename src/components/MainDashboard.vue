@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import SensorTable from '@/components/SensorTable.vue'
 import { useSensorsStore } from '@/stores/SensorsStore.ts'
 import { useMeasurementsStore } from '@/stores/MeasurementsStore.ts'
+import SensorGraph from '@/components/SensorGraph.vue'
 
-const selectedSensorId = ref<string | null>(null)
 const SensorsStore = useSensorsStore()
 const MeasurementsStore = useMeasurementsStore()
+const SelectedSensorId = ref<string>('')
+const SelectedSensor = computed(() =>
+  SensorsStore.sensorsData.find((s) => s.id === SelectedSensorId.value),
+)
 
 const setSelectedSensor = (sensorId: string) => {
-  selectedSensorId.value = sensorId
+  SelectedSensorId.value = sensorId
 }
 
 onMounted(async () => {
@@ -20,7 +24,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <span>Selected sensor: {{ selectedSensorId }}</span>
+  <SensorGraph
+    :measurements="MeasurementsStore.measurementsData[SelectedSensorId]"
+    :threshold="SelectedSensor?.threshold"
+  />
   <SensorTable
     :sensors="SensorsStore.sensorsData"
     :latest-measurements="MeasurementsStore.latestMeasurementBySensor"
