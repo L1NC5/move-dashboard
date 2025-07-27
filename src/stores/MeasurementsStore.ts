@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import { computed, type ComputedRef, ref, type Ref } from 'vue'
 import { type Measurement, MeasurementsService } from '@/services/MeasurementsService.ts'
 
-type MeasurementsMap = Record<string, Array<Measurement>>
-type LatestMeasurementMap = Record<string, Measurement>
+export type MeasurementsMap = Record<string, Array<Measurement>>
+export type LatestMeasurementMap = Record<string, Measurement>
 type LoadingMap = Record<string, boolean>
 
 export const useMeasurementsStore = defineStore('measurements', () => {
