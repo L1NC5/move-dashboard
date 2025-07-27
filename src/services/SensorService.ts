@@ -23,9 +23,4 @@ export class SensorService {
   static async getAllSensors(): Promise<Array<Sensor>> {
     return this.fetchJson<Array<Sensor>>('/sensors')
   }
-
-  /** Retrieves a specific sensor's info from the API */
-  static async getSensor(sensorID: string): Promise<Sensor> {
-    return this.fetchJson<Sensor>(`/sensors/${sensorID}`)
-  }
 }
