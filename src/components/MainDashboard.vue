@@ -34,5 +34,3 @@ onMounted(async () => {
     @change-graph-sensor="setSelectedSensor"
   />
 </template>
-
-<style scoped></style>
