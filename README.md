@@ -1,31 +1,26 @@
 # move-dashboard
 
-This template should help get you started developing with Vue 3 in Vite.
+Progetto challenge, mostra una serie di sensori all'interno di una tabella riordinabile e, scegliendo uno dei sensori, 
+è possibile consultare un grafico interattivo
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
+## Setup progetto
+Clonare il repo localmente e lanciare
 ```sh
 npm install
 ```
 
-### Compile, start mock API server and Hot-Reload for Development
+Fatto ciò, è possibile avviare il server locale tramite
 
 ```sh
 npm run dev
 ```
+e raggiungere il sito a questo indirizzo:
+```html
+http://localhost:5173/
+```
 
+---
+## Development info
 ### Launch mock API server only
 
 ```sh
